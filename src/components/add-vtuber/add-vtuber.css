@@ -1,0 +1,109 @@
+.file-input {
+	justify-self: center;
+	display: grid;
+	grid-template-areas: 'stack';
+	width: 260px;
+	height: 150px;
+	background-color: #ffffff;
+	border-radius: 8px;
+	letter-spacing: 2.5px;
+}
+.file-input > * {
+	grid-area: stack;
+}
+.file-input > input {
+	opacity: 0;
+}
+.file-input > .drop-zone {
+	margin: 12px;
+	border: dashed 2px #aaaaaa;
+	border-radius: 4px;
+	transition: margin 200ms;
+}
+.file-input.active > .drop-zone {
+	margin: 14px;
+	background-color: #dadada;
+}
+
+.form {
+	width: 1200px;
+	margin: 0 auto;
+	margin-top: 40px;
+	display: grid;
+	row-gap: 10px;
+	grid-template-columns: auto;
+	grid-template-rows: auto;
+}
+
+/* From uiverse.io by @mrhyddenn */
+.form__group {
+	position: relative;
+	padding: 20px 0 0;
+	margin-top: 10px;
+	width: 100%;
+	max-width: 180px;
+}
+
+.form__field {
+	font-family: inherit;
+	width: 100%;
+	border: none;
+	border-bottom: 2px solid #ffffff;
+	outline: 0;
+	font-size: 17px;
+	color: #fff;
+	padding: 7px 0;
+	background: transparent;
+	transition: border-color 0.2s;
+}
+
+.form__field::placeholder {
+	color: transparent;
+}
+
+.form__field:placeholder-shown ~ .form__label {
+	font-size: 17px;
+	cursor: text;
+	top: 20px;
+}
+
+.form__label {
+	position: absolute;
+	top: 0;
+	display: block;
+	transition: 0.2s;
+	font-size: 17px;
+	color: #ffffff;
+	pointer-events: none;
+}
+
+.form__field:focus {
+	padding-bottom: 6px;
+	font-weight: 700;
+	border-width: 3px;
+	border-image: linear-gradient(to right, #6e2b49, #e774b1);
+	border-image-slice: 1;
+}
+
+.form__field:focus ~ .form__label {
+	position: absolute;
+	top: 0;
+	display: block;
+	transition: 0.2s;
+	font-size: 17px;
+	color: #f4acf6;
+	font-weight: 700;
+}
+
+/* reset input */
+.form__field:required,
+.form__field:invalid {
+	box-shadow: none;
+}
+
+.inputs {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-items: center;
+}

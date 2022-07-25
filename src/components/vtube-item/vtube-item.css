@@ -1,0 +1,77 @@
+.vtuber-item {
+	width: 250px;
+	height: 300px;
+	display: grid;
+	grid-template-rows: minmax(100%, 1fr);
+	grid-template-areas: 'stack';
+	overflow: hidden;
+	border: solid;
+	border-image-slice: 1;
+	border-width: 5px;
+	border-image-source: linear-gradient(60deg, #b16ec4, #5f97b9);
+}
+.vtuber-item:hover figcaption {
+	transform: none;
+}
+.vtuber-item__image {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	grid-area: stack;
+}
+.figcap {
+	padding: 5px;
+	grid-area: stack;
+	background-color: #242424e0;
+	transform: translateY(calc(100% - 4rem));
+	transition: transform 600ms;
+	text-align: center;
+	display: grid;
+	grid-template-columns: 100%;
+	grid-template-rows: minmax(14px, 20px) minmax(14px, 20px) minmax(14px, 20px) minmax(100px, 170px) auto;
+	row-gap: 8px;
+	grid-auto-rows: auto;
+}
+.vtuber-item__name {
+	font-size: 22px;
+	color: white;
+}
+
+.vtuber-item__twitter {
+	font-size: 16px;
+	color: white;
+	text-transform: uppercase;
+}
+
+.vtuber-item__deadline {
+	font-size: 16px;
+	color: #fff;
+}
+
+.vtuber-item__info {
+	margin: 0;
+	font-size: 16px;
+	color: #fff;
+}
+
+.vtuber-item__status {
+	position: relative;
+	width: 100%;
+	height: 30px;
+	background-color: #fff;
+}
+
+.vtuber-item__done {
+	width: 100%;
+	height: 100%;
+	background-color: rgb(128, 203, 161);
+}
+.vtuber-item__text {
+	color: rgb(0, 0, 0);
+	font-size: 18px;
+	font-weight: 500;
+	position: absolute;
+	top: 0;
+	left: 50%;
+	transform: translateX(-50%);
+}
