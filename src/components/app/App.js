@@ -7,10 +7,58 @@ class App extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			addVtube: false,
 			showForm: false,
 			textForButton: 'Показать добавление',
+			activeClass: '',
+			data: [
+				{
+					name: 'Waabyuu',
+					twitter: 'https://twitter.com/waabyuu',
+					deadline: '8 July ',
+					info: 'All emotions are on discord + Tongue physics + Animated bubbles  + DANCE ANIMATION!!!! + TONGUE PHYSICS + falling drops',
+					done: '100',
+					img: 'https://pbs.twimg.com/profile_images/1549084675565576194/OryWGs0i_400x400.jpg',
+					id: 0,
+				},
+			],
 		};
+		this.tokens = [];
+		this.maxId = 1;
 	}
+
+	deleteItem = (id) => {
+		this.setState(({ data }) => {
+			return {
+				data: data.filter((item) => item.id !== id),
+			};
+		});
+	};
+	onSubmit = (e) => {
+		e.preventDefault();
+		this.setState({
+			addVtube: true,
+		});
+		e.target.reset();
+	};
+	addItem = (name, twitter, deadline, info, done, img) => {
+		const newItem = {
+			name,
+			twitter,
+			deadline,
+			info,
+			done,
+			img,
+			id: this.maxId++,
+		};
+		this.setState(({ data }) => {
+			const newArr = [...data, newItem];
+			console.log(newArr);
+			return {
+				data: newArr,
+			};
+		});
+	};
 
 	showForm = (e) => {
 		e.preventDefault();
@@ -28,25 +76,15 @@ class App extends React.Component {
 	};
 
 	render() {
-		const data = [
-			{
-				img: 'https://i.pinimg.com/originals/df/c7/4b/dfc74b6867617fc8220fddb0efc9d916.jpg',
-				name: 'Julia',
-				deadline: '2020-12-22',
-				twitter: 'ss',
-				info: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid ab, debitis aut delectus repudiandae ration',
-				done: '50',
-			},
-		];
 		const { showForm, textForButton } = this.state;
 		return (
 			<div className='background app '>
 				<VtubeHeader />
-				<VtubeList data={data} />
+				<VtubeList onDelete={this.deleteItem} data={this.state.data} />
 				<button onClick={this.showForm} className='btn'>
 					{textForButton}
 				</button>
-				{showForm ? <AddVtuber /> : ''}
+				{showForm ? <AddVtuber onAdd={this.addItem} /> : ''}
 				<div className='cube'></div>
 				<div className='cube'></div>
 				<div className='cube'></div>
@@ -54,5 +92,4 @@ class App extends React.Component {
 		);
 	}
 }
-
 export default App;
