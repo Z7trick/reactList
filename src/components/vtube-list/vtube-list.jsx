@@ -5,7 +5,7 @@ const VtubeList = ({ data, onDelete }) => {
 	const elements = data.map((item) => {
 		const { id, ...itemProps } = item;
 
-		return <VtubeItem key={id} {...itemProps} onDelete={() => onDelete(id)} {...item} />;
+		return <VtubeItem key={id} {...itemProps} onDelete={() => onDelete(id)} />;
 	});
 
 	return <ul className='vtube-list slider'>{elements}</ul>;

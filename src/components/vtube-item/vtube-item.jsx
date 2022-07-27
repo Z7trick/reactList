@@ -6,7 +6,7 @@ export class VtubeItem extends Component {
 	}
 
 	render() {
-		const { img, name, deadline, twitter, info, done } = this.props;
+		const { name, deadline, twitter, info, done, img } = this.props;
 		return (
 			<li className='wrapper'>
 				<button className='trash' onClick={this.props.onDelete}>

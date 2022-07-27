@@ -7,24 +7,14 @@ class App extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			addVtube: false,
+			imageURL: '',
 			showForm: false,
 			textForButton: 'Показать добавление',
 			activeClass: '',
-			data: [
-				{
-					name: 'Waabyuu',
-					twitter: 'https://twitter.com/waabyuu',
-					deadline: '8 July ',
-					info: 'All emotions are on discord + Tongue physics + Animated bubbles  + DANCE ANIMATION!!!! + TONGUE PHYSICS + falling drops',
-					done: '100',
-					img: 'https://pbs.twimg.com/profile_images/1549084675565576194/OryWGs0i_400x400.jpg',
-					id: 0,
-				},
-			],
+			data: JSON.parse(localStorage.getItem('items')) || [],
+			// maxId: 1,
 		};
-		this.tokens = [];
-		this.maxId = 1;
+		this.maxId = localStorage.getItem('id') ? localStorage.getItem('id') : 1;
 	}
 
 	deleteItem = (id) => {
@@ -34,32 +24,35 @@ class App extends React.Component {
 			};
 		});
 	};
-	onSubmit = (e) => {
-		e.preventDefault();
-		this.setState({
-			addVtube: true,
-		});
-		e.target.reset();
-	};
-	addItem = (name, twitter, deadline, info, done, img) => {
+
+	addItem = (name, twitter, deadline, info, done) => {
+		if (localStorage.getItem('id')) {
+			this.maxId++;
+			localStorage.setItem('id', this.maxId);
+		} else {
+			localStorage.setItem('id', this.maxId);
+		}
+
 		const newItem = {
 			name,
 			twitter,
 			deadline,
 			info,
 			done,
-			img,
-			id: this.maxId++,
+			id: +localStorage.getItem('id'),
+			img: this.state.imageURL,
+			// id: this.state.id,
 		};
-		this.setState(({ data }) => {
-			const newArr = [...data, newItem];
-			console.log(newArr);
-			return {
-				data: newArr,
-			};
+
+		this.setState((prevState) => ({
+			data: [...prevState.data, newItem],
+		}));
+	};
+	setImage = (url) => {
+		return this.setState({
+			imageURL: url,
 		});
 	};
-
 	showForm = (e) => {
 		e.preventDefault();
 		if (this.state.showForm) {
@@ -76,18 +69,21 @@ class App extends React.Component {
 	};
 
 	render() {
-		const { showForm, textForButton } = this.state;
+		const { showForm, textForButton, data } = this.state;
+		localStorage.setItem('items', JSON.stringify(this.state.data));
 		return (
 			<div className='background app '>
-				<VtubeHeader />
-				<VtubeList onDelete={this.deleteItem} data={this.state.data} />
-				<button onClick={this.showForm} className='btn'>
-					{textForButton}
-				</button>
-				{showForm ? <AddVtuber onAdd={this.addItem} /> : ''}
-				<div className='cube'></div>
-				<div className='cube'></div>
-				<div className='cube'></div>
+				<div className='container'>
+					<VtubeHeader />
+					<VtubeList onDelete={this.deleteItem} data={data} />
+					<button onClick={this.showForm} className='btn'>
+						{textForButton}
+					</button>
+					{showForm ? <AddVtuber setImage={this.setImage} onAdd={this.addItem} /> : ''}
+					<div className='cube'></div>
+					<div className='cube'></div>
+					<div className='cube'></div>
+				</div>
 			</div>
 		);
 	}

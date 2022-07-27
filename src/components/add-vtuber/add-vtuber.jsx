@@ -8,10 +8,10 @@ class AddVtuber extends React.Component {
 			twitter: '',
 			deadline: '',
 			info: '',
-			done: '',
-			img: '',
+			done: '0',
 			activeClass: '',
 		};
+		this.maxId = 1;
 		this.fileInput = React.createRef();
 	}
 	onValueChange = (e) => {
@@ -30,33 +30,38 @@ class AddVtuber extends React.Component {
 			activeClass: '',
 		});
 	};
-	onSubmit = (e) => {
-		const { name, twitter, deadline, info, done } = this.state;
-		e.preventDefault();
-		this.props.onAdd(name, twitter, deadline, info, done, URL.createObjectURL(this.fileInput.current.files[0]));
 
+	onSubmit = (e) => {
+		e.preventDefault();
+		const { name, twitter, deadline, info, done } = this.state;
+		// const img = URL.createObjectURL(this.fileInput.current.files[0]);
+
+		this.props.onAdd(name, twitter, deadline, info, done);
 		this.setState({
 			name: '',
 			twitter: '',
 			deadline: '',
 			info: '',
 			done: '',
-			img: '',
 		});
-		console.log(this.fileInput.current.files[0]);
 		e.target.reset();
 		this.fileInput.current.value = '';
 		this.fileInput.current.previousSibling.innerHTML = '<p><b>Выбери картинку</b> <br /> Или перемести сюда</p>';
 	};
 	onChangeFile = (e) => {
 		if (this.fileInput.current.files.length > 0) {
+			const reader = new FileReader();
+			reader.addEventListener('load', () => {
+				// localStorage.setItem('recent-image', reader.result);
+				this.props.setImage(reader.result);
+			});
+			reader.readAsDataURL(this.fileInput.current.files[0]);
 			e.target.previousSibling.innerHTML = '<p>Файл вставлен!</p>';
 		}
 	};
 
 	render() {
 		const { name, twitter, deadline, info, done } = this.state;
-
 		return (
 			<form className='form' onSubmit={this.onSubmit}>
 				<label

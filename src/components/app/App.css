@@ -1,7 +1,19 @@
+.background {
+	background: linear-gradient(132deg, #b16ec4, #5f97b9, #38216b);
+	background-size: 400% 400%;
+	animation: Gradient 15s ease infinite;
+	position: relative;
+	overflow: hidden;
+}
+
 .app {
+	min-height: 100vh;
 	text-align: center;
 	position: relative;
 	z-index: 1;
+}
+.container {
+	padding: 60px 0 60px 0;
 }
 .vtube-list {
 	margin-top: 3rem;
@@ -11,15 +23,6 @@
 	/* flex-wrap: wrap; */
 }
 
-.background {
-	background: linear-gradient(132deg, #b16ec4, #5f97b9, #38216b);
-	background-size: 400% 400%;
-	animation: Gradient 15s ease infinite;
-	position: relative;
-	height: 100vh;
-	width: 100%;
-	overflow: hidden;
-}
 .cube {
 	z-index: -1;
 	position: absolute;
