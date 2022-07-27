@@ -53,6 +53,11 @@ class App extends React.Component {
 			imageURL: url,
 		});
 	};
+	resetImage = () => {
+		return this.setState({
+			imageURL: '',
+		});
+	};
 	showForm = (e) => {
 		e.preventDefault();
 		if (this.state.showForm) {
@@ -79,7 +84,7 @@ class App extends React.Component {
 					<button onClick={this.showForm} className='btn'>
 						{textForButton}
 					</button>
-					{showForm ? <AddVtuber setImage={this.setImage} onAdd={this.addItem} /> : ''}
+					{showForm ? <AddVtuber resetImage={this.resetImage} setImage={this.setImage} onAdd={this.addItem} /> : ''}
 					<div className='cube'></div>
 					<div className='cube'></div>
 					<div className='cube'></div>

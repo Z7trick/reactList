@@ -44,8 +44,11 @@ class AddVtuber extends React.Component {
 			info: '',
 			done: '',
 		});
+		console.log(this.fileInput.current.files[0]);
+
+		this.props.resetImage();
 		e.target.reset();
-		this.fileInput.current.value = '';
+		console.log(this.fileInput.current.files[0]);
 		this.fileInput.current.previousSibling.innerHTML = '<p><b>Выбери картинку</b> <br /> Или перемести сюда</p>';
 	};
 	onChangeFile = (e) => {
