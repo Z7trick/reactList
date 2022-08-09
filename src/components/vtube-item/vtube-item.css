@@ -1,9 +1,23 @@
 .wrapper {
 	position: relative;
 }
+.textArea {
+	font-weight: bold;
+	padding: 15px;
+	background-color: #2424244a;
+	border: none;
+	color: #fff;
+	font-size: 16px;
+	font-family: inherit;
+	resize: none;
+}
+.textArea:focus {
+	outline: none;
+	background-color: #cd9eeb4a;
+}
 
 .vtuber-item {
-	width: 250px;
+	width: 300px;
 	height: 300px;
 	display: grid;
 	grid-template-rows: minmax(100%, 1fr);
@@ -12,11 +26,9 @@
 	border: solid;
 	border-image-slice: 1;
 	border-width: 5px;
-	border-image-source: linear-gradient(60deg, #b16ec4, #5f97b9);
+	border-image-source: linear-gradient(60deg, #ad58f8, #f581c1);
 }
-.vtuber-item:hover figcaption {
-	transform: none;
-}
+
 .vtuber-item__image {
 	width: 100%;
 	height: 100%;
@@ -24,10 +36,10 @@
 	grid-area: stack;
 }
 .figcap {
+	overflow: hidden;
 	padding: 5px;
 	grid-area: stack;
-	background-color: #242424e0;
-	transform: translateY(calc(100% - 4rem));
+	background: linear-gradient(-45deg, rgba(144, 79, 115, 0.734), #2424249c);
 	transition: transform 600ms;
 	text-align: center;
 	display: grid;
@@ -53,6 +65,7 @@
 }
 
 .vtuber-item__info {
+	word-wrap: break-word;
 	margin: 0;
 	font-size: 16px;
 	color: #fff;
@@ -68,9 +81,13 @@
 .vtuber-item__done {
 	width: 100%;
 	height: 100%;
-	background-color: rgb(128, 203, 161);
+	background-color: rgb(218, 67, 123);
 }
 .vtuber-item__text {
+	padding-left: 10px;
+	padding-right: 10px;
+	width: 50px;
+	height: 100%;
 	color: rgb(0, 0, 0);
 	font-size: 18px;
 	font-weight: 500;
@@ -78,68 +95,43 @@
 	top: 0;
 	left: 50%;
 	transform: translateX(-50%);
+	border: none;
+	background-color: rgba(221, 155, 251, 0.556);
 }
-
+.vtuber-item__text:focus {
+	outline: none;
+}
+.vtuber-item__price {
+	color: #fff;
+	font-size: 18px;
+}
 .trash {
-	position: absolute;
-	top: -40px;
-	left: 29%;
-	width: 150px;
-	height: 50px;
+	margin: 0 auto;
+	width: 30px;
+	height: 30px;
 	cursor: pointer;
 	display: flex;
 	align-items: center;
 	border: none;
 	border-radius: 5px;
 	box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.15);
-	background: #e62222;
+	background: #cc3e93;
+	transition: all 200ms ease;
 }
 
-.trash,
-.trash span {
-	transition: 200ms;
-}
-
-.trash .text {
-	transform: translateX(35px);
-	color: white;
-	font-weight: bold;
+.trash:hover {
+	transform: rotate(-90deg);
 }
 
 .trash .icon {
-	position: absolute;
-	border-left: 1px solid #c41b1b;
-	transform: translateX(110px);
-	height: 40px;
-	width: 40px;
+	width: 100%;
+	height: 100%;
 	display: flex;
-	align-items: center;
 	justify-content: center;
+	align-items: center;
 }
 
 .trash svg {
 	width: 15px;
 	fill: #eee;
-}
-
-.trash:hover {
-	background: #ff3636;
-}
-
-.trash:hover .text {
-	color: transparent;
-}
-
-.trash:hover .icon {
-	width: 150px;
-	border-left: none;
-	transform: translateX(0);
-}
-
-.trash:focus {
-	outline: none;
-}
-
-button:active .icon svg {
-	transform: scale(0.8);
 }

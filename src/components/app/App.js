@@ -1,9 +1,9 @@
-import React from 'react';
+import { Component } from 'react';
 import AddVtuber from '../add-vtuber/add-vtuber';
 import VtubeHeader from '../vtube-header/vtube-header';
 import VtubeList from '../vtube-list/vtube-list';
 import './App.css';
-class App extends React.Component {
+class App extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -24,8 +24,21 @@ class App extends React.Component {
 			};
 		});
 	};
+	onChangeText = (info, done, id) => {
+		this.setState(({ data }) => {
+			const newArr = data.map((item) => {
+				if (item.id === id) {
+					item.info = info;
+					item.done = done;
+					return item;
+				}
+				return item;
+			});
+			return { data: newArr };
+		});
+	};
 
-	addItem = (name, twitter, deadline, info, done) => {
+	addItem = ({ name, twitter, deadline, info, done, price }) => {
 		if (localStorage.getItem('id')) {
 			this.maxId++;
 			localStorage.setItem('id', this.maxId);
@@ -39,6 +52,7 @@ class App extends React.Component {
 			deadline,
 			info,
 			done,
+			price,
 			id: +localStorage.getItem('id'),
 			img: this.state.imageURL,
 			// id: this.state.id,
@@ -80,7 +94,7 @@ class App extends React.Component {
 			<div className='background app '>
 				<div className='container'>
 					<VtubeHeader />
-					<VtubeList onDelete={this.deleteItem} data={data} />
+					<VtubeList onChangeText={this.onChangeText} onDelete={this.deleteItem} data={data} />
 					<button onClick={this.showForm} className='btn'>
 						{textForButton}
 					</button>

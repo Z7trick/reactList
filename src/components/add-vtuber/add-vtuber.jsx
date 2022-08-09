@@ -8,8 +8,9 @@ class AddVtuber extends React.Component {
 			twitter: '',
 			deadline: '',
 			info: '',
-			done: '0',
+			done: '',
 			activeClass: '',
+			price: '',
 		};
 		this.maxId = 1;
 		this.fileInput = React.createRef();
@@ -33,22 +34,21 @@ class AddVtuber extends React.Component {
 
 	onSubmit = (e) => {
 		e.preventDefault();
-		const { name, twitter, deadline, info, done } = this.state;
+		const { name, twitter, deadline, info, done, price } = this.state;
 		// const img = URL.createObjectURL(this.fileInput.current.files[0]);
 
-		this.props.onAdd(name, twitter, deadline, info, done);
+		this.props.onAdd({ name, twitter, deadline, info, done, price });
 		this.setState({
 			name: '',
 			twitter: '',
 			deadline: '',
 			info: '',
+			price: '',
 			done: '',
 		});
-		console.log(this.fileInput.current.files[0]);
 
 		this.props.resetImage();
 		e.target.reset();
-		console.log(this.fileInput.current.files[0]);
 		this.fileInput.current.previousSibling.innerHTML = '<p><b>Выбери картинку</b> <br /> Или перемести сюда</p>';
 	};
 	onChangeFile = (e) => {
@@ -64,7 +64,7 @@ class AddVtuber extends React.Component {
 	};
 
 	render() {
-		const { name, twitter, deadline, info, done } = this.state;
+		const { name, twitter, deadline, info, done, price } = this.state;
 		return (
 			<form className='form' onSubmit={this.onSubmit}>
 				<label
@@ -126,10 +126,22 @@ class AddVtuber extends React.Component {
 							placeholder='Info'
 							name='info'
 							className='form__field'
-							type='input'
+							type='text'
 							value={info}
 						/>
 						<label className='form__label'>Инфо</label>
+					</div>
+					<div className='form__group field'>
+						<input
+							onChange={this.onValueChange}
+							required=''
+							placeholder='price'
+							name='price'
+							className='form__field'
+							type='input'
+							value={price}
+						/>
+						<label className='form__label'>Цена</label>
 					</div>
 					<div className='form__group field'>
 						<input
