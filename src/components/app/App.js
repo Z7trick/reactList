@@ -1,31 +1,23 @@
-import { Component } from 'react';
+import { useState, useEffect } from 'react';
 import AddVtuber from '../add-vtuber/add-vtuber';
 import VtubeHeader from '../vtube-header/vtube-header';
 import VtubeList from '../vtube-list/vtube-list';
 import './App.css';
-class App extends Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			imageURL: '',
-			showForm: false,
-			textForButton: 'Показать добавление',
-			activeClass: '',
-			data: JSON.parse(localStorage.getItem('items')) || [],
-			// maxId: 1,
-		};
-		this.maxId = localStorage.getItem('id') ? localStorage.getItem('id') : 1;
-	}
+const App = (props) => {
+	const [imageURL, setImageURL] = useState('');
+	const [checkForm, setCheckForm] = useState(false);
+	const [textForButton, setTextButton] = useState('Показать добавление');
+	const [activeClass, setActiveClass] = useState('');
+	const [data, setData] = useState(JSON.parse(localStorage.getItem('items')) || []);
+	let maxId = localStorage.getItem('id') ? localStorage.getItem('id') : 1;
 
-	deleteItem = (id) => {
-		this.setState(({ data }) => {
-			return {
-				data: data.filter((item) => item.id !== id),
-			};
-		});
+	const deleteItem = (id) => {
+		setData((data) => data.filter((item) => item.id !== id));
+		maxId--;
+		localStorage.setItem('id', maxId);
 	};
-	onChangeText = (info, done, id) => {
-		this.setState(({ data }) => {
+	const onChangeText = (info, done, id) => {
+		setData((data) => {
 			const newArr = data.map((item) => {
 				if (item.id === id) {
 					item.info = info;
@@ -34,16 +26,16 @@ class App extends Component {
 				}
 				return item;
 			});
-			return { data: newArr };
+			return newArr;
 		});
 	};
 
-	addItem = ({ name, twitter, deadline, info, done, price }) => {
+	const addItem = ({ name, twitter, deadline, info, done, price }) => {
 		if (localStorage.getItem('id')) {
-			this.maxId++;
-			localStorage.setItem('id', this.maxId);
+			maxId++;
+			localStorage.setItem('id', maxId);
 		} else {
-			localStorage.setItem('id', this.maxId);
+			localStorage.setItem('id', maxId);
 		}
 
 		const newItem = {
@@ -54,57 +46,40 @@ class App extends Component {
 			done,
 			price,
 			id: +localStorage.getItem('id'),
-			img: this.state.imageURL,
+			img: imageURL,
 			// id: this.state.id,
 		};
-
-		this.setState((prevState) => ({
-			data: [...prevState.data, newItem],
-		}));
+		setData((data) => [...data, newItem]);
 	};
-	setImage = (url) => {
-		return this.setState({
-			imageURL: url,
-		});
+	const setImage = (url = '') => {
+		setImageURL(url);
 	};
-	resetImage = () => {
-		return this.setState({
-			imageURL: '',
-		});
-	};
-	showForm = (e) => {
+	const showForm = (e) => {
 		e.preventDefault();
-		if (this.state.showForm) {
-			this.setState((state) => ({
-				showForm: false,
-				textForButton: 'Показать добавление',
-			}));
+		if (checkForm) {
+			setCheckForm((form) => false);
+			setTextButton((text) => 'Показать добавление');
 			return;
 		}
-		this.setState((state) => ({
-			showForm: true,
-			textForButton: 'Свернуть добавление',
-		}));
+		setCheckForm((form) => true);
+		setTextButton((text) => 'Свернуть добавление');
 	};
 
-	render() {
-		const { showForm, textForButton, data } = this.state;
-		localStorage.setItem('items', JSON.stringify(this.state.data));
-		return (
-			<div className='background app '>
-				<div className='container'>
-					<VtubeHeader />
-					<VtubeList onChangeText={this.onChangeText} onDelete={this.deleteItem} data={data} />
-					<button onClick={this.showForm} className='btn'>
-						{textForButton}
-					</button>
-					{showForm ? <AddVtuber resetImage={this.resetImage} setImage={this.setImage} onAdd={this.addItem} /> : ''}
-					<div className='cube'></div>
-					<div className='cube'></div>
-					<div className='cube'></div>
-				</div>
+	localStorage.setItem('items', JSON.stringify(data));
+	return (
+		<div className='background app '>
+			<div className='container'>
+				<VtubeHeader />
+				<VtubeList onChangeText={onChangeText} onDelete={deleteItem} data={data} />
+				<button onClick={showForm} className='btn'>
+					{textForButton}
+				</button>
+				{checkForm ? <AddVtuber setImage={setImage} onAdd={addItem} /> : ''}
+				<div className='cube'></div>
+				<div className='cube'></div>
+				<div className='cube'></div>
 			</div>
-		);
-	}
-}
+		</div>
+	);
+};
 export default App;
